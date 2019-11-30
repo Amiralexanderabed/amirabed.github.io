@@ -322,12 +322,39 @@ padding: 0;
   box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
 }
 
+.buttonUCSDcolors {
+  background-color: rgb(244, 255, 23);
+  border: none;
+  color: white;
+  padding: 15px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  border-radius: 12px;
+  webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
+  
+}
+
+.buttonUCSDcolors:hover {
+  background-color: rgb(200, 200, 20);
+  cursor: pointer;
+  color: white;
+}
+
+.buttonUCSDcolors:hover {
+  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+
 
 h1 {
     padding: 20px;
 }
 
 li{
+    
+    display: inline-block;
     padding: 5px 20px;
 }
 
@@ -423,4 +450,20 @@ a:hover, a:active {
   color: white;
   text-decoration: none;
   background-color: #5b9aa0;
+}
+
+#logo:hover{
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+    background: url(../images/Line_Following_Robot.jpg);
+    border: none;
+    cursor: pointer;
+    
+}
+
+#logo_2:hover{
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+    background-image: url(../images/Line_Following_Robot_2.jpeg);
+    border: none;
+    cursor: pointer;
+    
 }
