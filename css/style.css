@@ -1,13 +1,12 @@
-* {
-    box-sizing: border-box;
- }
+html,body {
 
-body {
-background-color: lightgrey;
-font-family: "Helvetica Neue, Helvetica, Arial, Open Sans", sans-serif;
 margin: 0;
 padding: 0;
-height:100%;
+}
+
+body {
+    background-color: lightgrey;
+font -family: "Helvetica Neue, Helvetica, Arial, Open Sans", sans-serif;
 }
 
 #container {
@@ -252,7 +251,7 @@ p1{
 p2{
     padding: 15px;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
 }
 
 p3{
@@ -270,6 +269,15 @@ header {
 section {
     background: #878f99;
     padding: 20px;
+}
+
+div3 {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  position: center;
+  overflow: hidden;
+  width: 100%;
 }
 
 
