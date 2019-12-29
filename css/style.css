@@ -5,13 +5,15 @@ height: 100%;
 }
 
 body {
-background-color: lightgrey;
+background-color: #D4E3F6;
 font-family: Arial, Helvetica, sans-serif;
 }
+
 #container {
    min-height:100%;
    position:relative;
 }
+
 #header {
    padding:10px;
 }
@@ -19,7 +21,8 @@ font-family: Arial, Helvetica, sans-serif;
 #body {
 		padding:10px;
 		padding-bottom:60px;	/* Height of the footer */
-	}
+  }
+
 #footer {
 		position:absolute;
 		bottom:0;
@@ -29,7 +32,7 @@ font-family: Arial, Helvetica, sans-serif;
 
 .thefooter{
     text-align: center;
-    background: #5b9aa0;
+    background: #006CCC;
     top: 120%;
     transform: translateV(-50%);
     display: flex;
@@ -38,7 +41,6 @@ font-family: Arial, Helvetica, sans-serif;
     margin: auto;
     padding: 10px;
 }
-
 
 .btn{
     display: inline-block;
@@ -56,12 +58,10 @@ font-family: Arial, Helvetica, sans-serif;
     transition: 0.2s linear;
 }
 
-
 .btn:hover {
     transform: scale(1.3);
     /*color: white;*/
 }
-
 
 .btn::before {
     content: "";
@@ -73,8 +73,6 @@ font-family: Arial, Helvetica, sans-serif;
     /*left:-110%;*/
     /*top:90%;*/
 }
-
-
 
 .buttonMediumBlue {
   background-color: mediumblue;
@@ -88,7 +86,6 @@ font-family: Arial, Helvetica, sans-serif;
   border-radius: 12px;
   webkit-transition-duration: 0.4s; /* Safari */
   transition-duration: 0.4s;
-  
 }
 
 .buttonMediumBlue:hover {
@@ -113,7 +110,6 @@ font-family: Arial, Helvetica, sans-serif;
   border-radius: 12px;
   webkit-transition-duration: 0.4s; /* Safari */
   transition-duration: 0.4s;
-  
 }
 
 .buttonDark:hover {
@@ -138,7 +134,6 @@ font-family: Arial, Helvetica, sans-serif;
   border-radius: 12px;
   webkit-transition-duration: 0.4s; /* Safari */
   transition-duration: 0.4s;
-  
 }
 
 .buttonUCSDcolors:hover {
@@ -159,7 +154,7 @@ ul {
 }
 
 .fakeclick {
-  background: royalblue !important;
+  background: #002B6D !important;
 }
 
 .main { 
@@ -209,24 +204,24 @@ li {
 li a {
   display: block;
   color: white;
-  background-color: #5b9aa0;
+  background-color: #006CCC;
   text-align: center;
   padding: 14px 16px;
   text-decoration: none;
 }
 
 li a:hover {
-  background-color: royalblue;
+  background-color: #002B6D;
 }
 
 .navigation:active{
-  background: royalblue;
+  background: #002B6D;
   color: #fff;
   border-radius: 5px;
 }
 
 .headup {
-    background: #5b9ac0;
+    background: #71B6DF;
     padding: 10px;
     display: flex;
     flex-direction: row;
@@ -239,49 +234,25 @@ li a:hover {
 }
 
 .lowpart{
-    padding: 10px;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
 }
 
-
 header {
-    background: #a2b9bc;
+    background: #71B6DF;
     padding: 10px 20px;
 }
 
 section {
-    background: #878f99;
+    background: #71B6DF;
     padding: 20px;
-}
-
-div3 {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  position: center;
-  overflow: hidden;
-  width: 100%;
-}
-
-
-div2 {
-  
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  background-color: #5b9aa0;
-  position: fixed;
-  top: 0;
-  width: 100%;
 }
 
 /* unvisited link */
 li2 a:link, li2 a:visited {
   color: white;
   text-decoration: none;
-  background-color: #5b9aa0;
+  background-color: #006CCC;
   font-weight: 300;
   letter-spacing: 2px;
   display: inline-block;
@@ -289,7 +260,7 @@ li2 a:link, li2 a:visited {
   text-align: center;
 }
 
-i:hover {
+i1:hover {
     color: blue;
 }
 
@@ -313,7 +284,7 @@ i5:hover {
 li2 a:hover {
   color: white;
   text-decoration: none;
-  background-color: #5b9aa0;
+  background-color: #006CCC;
   font-weight: 300; 
   letter-spacing: 2px;  
   width: 100%; 
