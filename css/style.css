@@ -153,8 +153,8 @@ ul {
   overflow: hidden;
 }
 
-.fakeclick {
-  background: #002B6D !important;
+.highlightedNav {
+  background: #FFFFFF;
 }
 
 .main { 
