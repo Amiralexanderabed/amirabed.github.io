@@ -32,11 +32,11 @@
         const currentTheme = localStorage.getItem('theme') ? localStorage.getItem('theme') : null;
         
             var date = new Date(); // Create a Date object to find out what time it is
-            if(date.getHours() >= 15){ // Check the time
+            /*if(date.getHours() >= 17){ // Check the time
                 //toggleSwitch.checked = true;
                 document.documentElement.setAttribute('data-theme', 'dark');
                 localStorage.setItem('theme', 'dark'); //add this
-            }
+            }*/
 
             if (currentTheme) {
                 document.documentElement.setAttribute('data-theme', currentTheme);
