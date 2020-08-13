@@ -106,12 +106,14 @@ button:hover {
 }
 
 .showcase .showcase-content-two{
-  margin: 0 2.5rem;
-  
+  margin: 0 5rem;
+  font-size: 1.25rem;
+  text-align: center;
 }
 
 .showcase .showcase-content h2 {
-    font-size: 2rem;
+    text-align: center;
+    font-size: 2.5rem;
     padding: 1rem 2rem;
 }
 
@@ -248,7 +250,7 @@ ul button {
 .cont {
   width: 100%;
   padding-bottom: 100px;
-  padding-left: 6%;
+  padding-left: 7.5%;
 }
 
 /*
