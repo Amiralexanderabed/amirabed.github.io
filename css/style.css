@@ -322,6 +322,21 @@ ul button {
   padding-left: 7.5%;
 }
 
+.showoff {
+    display:flex;
+    background: rgb(235, 235, 235);
+    padding: 2.5rem 0 2.5rem 0;
+    text-align: center;
+}
+
+.showoff img {
+    padding: 10px;
+    height: 20rem;
+    display:block;
+    margin:auto;
+    justify-content: center;
+}
+
 /*
 @media (min-width: 420px) {
   img {
