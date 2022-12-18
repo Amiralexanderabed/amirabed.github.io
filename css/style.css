@@ -23,6 +23,10 @@ body {
     display: inline-block;
     transition: background-color 1s ease;
   }
+  
+  .dot:hover {
+    background: rgba(46, 47, 48, 0.7);
+}
 
 .active {
     color: #0088a9;
@@ -35,6 +39,39 @@ body {
 }
 
 .mySlides {display: none;}
+
+.inline-block {
+    display: inline-block;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
+    width:416px;
+ } 
+
+ .inline-block-2 {
+    display: inline-block;
+    justify-content: center;
+    margin-left: 55%;
+    width:450px;
+ } 
+
+ .inline-block-3 {
+    display: block;
+    justify-content: center;
+    margin-left: 100%;
+    width:450px;
+ } 
+
+ .inline-block-4 {
+    display: inline-block;
+    justify-content: center;
+    margin-left: 5%;
+    width:350px;
+ } 
+
+ .center-text{
+     text-align: center;
+ }
 
 /*img {vertical-align: middle;}*/
 
@@ -301,6 +338,15 @@ ul button {
 }
 
 /* footer general */
+#page-container {
+    position: relative;
+    min-height: 100vh;
+  }
+  
+  #content-wrap {
+    padding-bottom: 2.5rem;    /* Footer height */
+  }
+
 #footer {
     background-color: white;
     color: #0088a9;
@@ -319,7 +365,7 @@ ul button {
 .cont {
   width: 100%;
   padding-bottom: 100px;
-  padding-left: 7.5%;
+  padding-left: 12.5%;
 }
 
 .showoff {

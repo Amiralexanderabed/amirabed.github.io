@@ -16,16 +16,18 @@
   <header>
     <nav>
         <ul>
-            <li><a class="active" href="index.html">Home<a></li>
+            <li><a class="active" href="index.html">Home</a></li>
             <li><a href="experience.html">Experience</a></li>
             <li><a href="projects.html">Projects</a></li>
             <li><a href="photos.html">Photos</a></li>
-            <a class="resume-button" href="assets/Resume Updated 2021.pdf" target="_blank"><button class="resume-button">Resume</button></a>
+            <a class="resume-button" href="assets/Resume Updated 2022.pdf" target="_blank"><button class="resume-button">Resume</button></a>
         </ul>
     </nav>
   </header>
     
   <body>
+    <div id="page-container">
+        <div id="content-wrap">
     <section class="showcase">
         <div class="amir-area">
             <img src="images/avatar.jpg">
@@ -34,21 +36,21 @@
             </div>
             <div class="amir-personal-info">
                 <ul>
-                    <li><p>Undergraduate Electrical Engineer</p></li>
-                    <li><p>University of California, San Diego</p></li>
-                    <li><p>From Orange County, California</p></li>
+                    <p><i3 class="fa-solid fa-briefcase"></i3>  Electrical Design Engineer</p>
+                    <p><i3 class="fa-solid fa-graduation-cap"></i3>  University of California, San Diego</p>
+                    <p><i3 class="fa-solid fa-house-chimney"></i3>  Orange County, California</p>
                 </ul>
             </div>
             <div class="contact">
                 <div id="contact-div">   
                     <div class="thecontact-div">
-                        <li2><a class="btn" href="https://www.facebook.com/amir.abed.5203">
+                        <!-- <li2><a class="btn" href="https://www.facebook.com/amir.abed.5203">
                         <i1 class="fab fa-facebook-f"></i1>
-                        </a></li2>
+                        </a></li2> -->
                         
-                        <li2><a class="btn" href="https://www.instagram.com/amiralex2000/">
+                        <!-- <li2><a class="btn" href="https://www.instagram.com/amiralex2000/">
                         <i2 class="fab fa-instagram"></i2>
-                        </a></li2>
+                        </a></li2> -->
                         
                        <!-- <li2><a class="btn" href="https://www.snapchat.com/add/amir.000">
                         <i3 class="fab fa-snapchat"></i3>
@@ -66,25 +68,25 @@
             </div>
             <section class="container">
                 <div class="resume-box"> 
-                    <a href="assets/resume.pdf" target="_blank"><button class="resume-button">Resume</button></a>    
+                    <a href="assets/Resume Updated 2022.pdf" target="_blank"><button class="resume-button">Resume</button></a>    
                 </div>
             </section>
         </div>
 
 
 
-        <div class="showcase-content">
+    <div class="showcase-content">
             
-        <div class="slideshow-container">
+    <div class="slideshow-container">
     
         <div class="mySlides fade">
 
           <h2>About Me</h2>
           <!-- <div class="numbertext">1 / 3</div> -->
           <div class="showcase-content-two">
-          <p> I am an Electrical Engineering student hoping to earn my Bachelor's Degree in June 2022 in the 
-                field of Machine Learning. I enjoy playing basketball and exercising. My hobbies include 
-                taking pictures and discovering new music to listen to. </p>
+          <p> I earned my Bachelor's Degree in Electrical Engineering from UCSD in June 2022 in the 
+                field of Machine Learning. I developed many skills from participating in group projects inside and outside of school. 
+                These projects gave me hands on experience that I was able to carry forward in my future work.  </p>
           </div>
 
           <!-- <div class="showcase-content-two">
@@ -94,37 +96,40 @@
 
           <br></br>
 
-          <img src="images/Me_hiking.jpg" alt="Hiking" >
+          <img src="images/IEEE_QP_PLUS_3.png" alt="Tensor Flow" >
 
         </div>
 
         <div class="mySlides fade">
 
-            <h2>Classes</h2>
+            <h2>Interests</h2>
             <!-- <div class="numbertext">2 / 3</div> -->
             <div class="showcase-content-two">
-            <p> I like participating in group projects inside and outside of school. It gives me hands on experience,
-                 and the collaboration process encourages the sharing of knowledge and skills.  </p>
+            <p> I am interested in Embedded systems and have experience designing PCB's for various sensors. I would like to pursue
+                a Master's degree in embedded systems in the near future. 
+            </p>
             </div>
   
             <br></br>
   
-            <img src="images/IEEE_QP_PLUS_3.png" alt="Tensor Flow" >
+            <img src="images/soil_sensor_pcb.jpg" alt="Soil Sensor" >
   
         </div>
 
         <div class="mySlides fade">
 
-            <h2>Clubs</h2>
+            <h2>Hobbies</h2>
             <!-- <div class="numbertext">3 / 3</div> -->
             <div class="showcase-content-two">
-                <p> IEEE has provided myself, as well as many others, with the opportunity to showcase our skills in order
-                    to create a solution to a given problem with a team of curious and determined students.  </p>
+                <p> I enjoy playing basketball and exercising. My hobbies include 
+                    taking pictures and discovering new music to listen to. I also operate 3D printers 
+                    and have deisgned multiple parts using software such as Solidworks and Onshape.  </p>
                 </div>
   
             <br></br>
   
-            <img src="images/IEEE_QP_group.jpg" alt="IEEE" >
+            <div class="inline-block"><img src="images/soil_sensor_case.jpg" alt="soil_sennsor_case" > </div>
+            <div class="inline-block"><img src="images/soil_sensor_case_printed.jpg" alt="soil_sennsor_case_printed" > </div>
   
         </div>
 
@@ -132,9 +137,9 @@
 
         <br></br>
         <div style="text-align:center">
-            <span class="dot"></span> 
-            <span class="dot"></span> 
-            <span class="dot"></span> 
+            <span class="dot" onclick="currentSlide(1)"></span> 
+            <span class="dot" onclick="currentSlide(2)"></span> 
+            <span class="dot" onclick="currentSlide(3)"></span> 
         </div>
 
         </div>
@@ -142,9 +147,12 @@
         <script src="The_Script.js"></script>
 
     </section> 
-        <div id="footer">
-            <p>&copy; Amir Abed 2021</p>
-        </div> 
+    </div>
+    </div>
+        <footer id="footer">
+            <p>&copy; Amir Abed 2023</p>
+        </footer> 
+    
   </body>
 
 
