@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Biosphere — an interactive globe of life on Earth</title>
+<meta name="description" content="Spin the Earth and explore 846 land ecoregions and 269 marine regions: biomes, Köppen climate, and the species that live in each one.">
+<link rel="icon" href="../Triple_A_Logo.1.jpg" type="image/jpeg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#05070d; --panel:rgba(14,19,30,.82); --panel-solid:#0e131e;
+  --line:rgba(255,255,255,.10); --line-2:rgba(255,255,255,.18);
+  --txt:#e8edf5; --dim:#98a4b8; --dim-2:#6f7c92;
+  --accent:#5fd3a6; --accent-2:#3aa7f0; --warn:#f0a03a;
+  --r:12px; --shadow:0 10px 40px rgba(0,0,0,.55);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden}
+body{
+  background:var(--bg); color:var(--txt);
+  font-family:"Montserrat",system-ui,-apple-system,"Segoe UI",sans-serif;
+  font-size:14px; -webkit-font-smoothing:antialiased;
+  overscroll-behavior:none; touch-action:none;
+}
+canvas{display:block;position:fixed;inset:0;width:100%;height:100%;cursor:grab}
+canvas.dragging{cursor:grabbing}
+
+/* ---------- loading ---------- */
+#loader{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  background:var(--bg);z-index:100;transition:opacity .6s ease;gap:18px}
+#loader.done{opacity:0;pointer-events:none}
+.lring{width:54px;height:54px;border:2px solid rgba(255,255,255,.12);border-top-color:var(--accent);
+  border-radius:50%;animation:spin 1s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+#lmsg{color:var(--dim);font-size:13px;letter-spacing:.02em}
+.lbar{width:220px;height:2px;background:rgba(255,255,255,.10);border-radius:2px;overflow:hidden}
+.lbar i{display:block;height:100%;width:0;background:var(--accent);transition:width .3s ease}
+
+/* ---------- generic panel ---------- */
+.panel{background:var(--panel);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow)}
+
+/* ---------- top bar ---------- */
+#top{position:fixed;top:14px;left:14px;z-index:20;display:flex;gap:10px;align-items:flex-start}
+#brand{padding:10px 14px;display:flex;flex-direction:column;gap:1px}
+#brand b{font-size:15px;font-weight:700;letter-spacing:.01em}
+#brand span{font-size:10.5px;color:var(--dim-2);letter-spacing:.09em;text-transform:uppercase}
+#searchwrap{position:relative}
+#search{width:230px;padding:11px 13px 11px 34px;border-radius:var(--r);border:1px solid var(--line);
+  background:var(--panel);backdrop-filter:blur(14px);color:var(--txt);font-family:inherit;font-size:13px;
+  outline:none;box-shadow:var(--shadow)}
+#search:focus{border-color:var(--accent)}
+#search::placeholder{color:var(--dim-2)}
+.sicon{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--dim-2);pointer-events:none;font-size:13px}
+#results{position:absolute;top:calc(100% + 6px);left:0;width:300px;max-height:320px;overflow-y:auto;
+  border-radius:var(--r);display:none;padding:5px}
+#results.on{display:block}
+.rrow{padding:8px 10px;border-radius:8px;cursor:pointer;display:flex;align-items:center;gap:9px}
+.rrow:hover,.rrow.sel{background:rgba(255,255,255,.09)}
+.rrow .chip{width:9px;height:9px;border-radius:3px;flex:none}
+.rrow .nm{flex:1;font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rrow .sub{font-size:10.5px;color:var(--dim-2);flex:none}
+
+/* ---------- layer switcher ---------- */
+#leftcol{position:fixed;left:14px;bottom:14px;z-index:20;width:236px;display:flex;
+  flex-direction:column;gap:10px;align-items:stretch;max-height:calc(100vh - 88px)}
+#layers{padding:12px;flex:none}
+.ltitle{font-size:10px;letter-spacing:.11em;text-transform:uppercase;color:var(--dim-2);margin-bottom:9px}
+.lgrid{display:grid;grid-template-columns:1fr 1fr;gap:5px}
+.lbtn{padding:8px 6px;border-radius:8px;border:1px solid transparent;background:rgba(255,255,255,.05);
+  color:var(--dim);font-family:inherit;font-size:11.5px;font-weight:500;cursor:pointer;transition:.15s}
+.lbtn:hover{background:rgba(255,255,255,.10);color:var(--txt)}
+.lbtn.on{background:rgba(95,211,166,.16);border-color:rgba(95,211,166,.5);color:var(--accent)}
+.ctl{margin-top:12px;display:flex;align-items:center;gap:9px}
+.ctl label{font-size:11px;color:var(--dim);flex:none;width:52px}
+input[type=range]{flex:1;-webkit-appearance:none;appearance:none;height:3px;border-radius:3px;
+  background:rgba(255,255,255,.16);outline:none}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:13px;height:13px;border-radius:50%;
+  background:var(--accent);cursor:pointer;border:none}
+input[type=range]::-moz-range-thumb{width:13px;height:13px;border-radius:50%;background:var(--accent);
+  cursor:pointer;border:none}
+.tog{display:flex;align-items:center;gap:7px;font-size:11.5px;color:var(--dim);cursor:pointer;user-select:none}
+.tog input{accent-color:var(--accent);cursor:pointer}
+.togrow{margin-top:11px;display:flex;gap:14px;flex-wrap:wrap}
+
+/* ---------- legend ---------- */
+#legend{padding:12px;max-height:54vh;overflow-y:auto;display:none;flex:0 1 auto}
+#legend.on{display:block}
+.lgrow{display:flex;align-items:center;gap:8px;padding:1.5px 0;font-size:10.5px;color:var(--dim);cursor:default}
+.lgrow i{width:11px;height:11px;border-radius:3px;flex:none;display:block}
+.lgrow span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* ---------- info panel ---------- */
+#info{position:fixed;top:14px;right:14px;z-index:20;width:338px;max-height:calc(100vh - 28px);
+  display:flex;flex-direction:column;transform:translateX(calc(100% + 20px));transition:transform .35s cubic-bezier(.22,1,.36,1)}
+#info.on{transform:none}
+#ihead{padding:15px 16px 13px;border-bottom:1px solid var(--line);position:relative;flex:none}
+#iclose{position:absolute;top:12px;right:12px;width:26px;height:26px;border-radius:7px;border:none;
+  background:rgba(255,255,255,.07);color:var(--dim);cursor:pointer;font-size:15px;line-height:1;font-family:inherit}
+#iclose:hover{background:rgba(255,255,255,.14);color:var(--txt)}
+#iname{font-size:16.5px;font-weight:700;line-height:1.28;padding-right:30px;margin-bottom:7px}
+#imeta{display:flex;flex-wrap:wrap;gap:6px}
+.tag{display:inline-flex;align-items:center;gap:5px;padding:3.5px 8px;border-radius:6px;
+  background:rgba(255,255,255,.07);font-size:10.5px;color:var(--dim);font-weight:500}
+.tag i{width:8px;height:8px;border-radius:2.5px;display:block;flex:none}
+#ibody{overflow-y:auto;padding:14px 16px 16px}
+.sect{margin-bottom:16px}
+.sect:last-child{margin-bottom:0}
+.sh{font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim-2);margin-bottom:8px}
+.about{font-size:12.5px;line-height:1.62;color:var(--dim)}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.stat{background:rgba(255,255,255,.05);border-radius:9px;padding:9px 10px}
+.stat b{display:block;font-size:15px;font-weight:600;color:var(--txt);line-height:1.2}
+.stat span{display:block;font-size:9.5px;color:var(--dim-2);margin-top:3px;letter-spacing:.05em;text-transform:uppercase}
+.stat.wide{grid-column:1/-1}
+.sp{display:flex;align-items:baseline;gap:8px;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05)}
+.sp:last-child{border-bottom:none}
+.sp .g{font-size:8.5px;font-weight:700;letter-spacing:.06em;padding:2.5px 5px;border-radius:4px;flex:none;
+  min-width:26px;text-align:center}
+.sp .n{flex:1;min-width:0}
+.sp .n b{display:block;font-size:12.5px;font-weight:600;line-height:1.35}
+.sp .n i{display:block;font-size:10.5px;color:var(--dim-2);font-style:italic;margin-top:1px}
+.g-M{background:rgba(240,160,58,.18);color:#f0a03a}
+.g-B{background:rgba(58,167,240,.18);color:#3aa7f0}
+.g-R{background:rgba(140,200,80,.18);color:#8cc850}
+.g-A{background:rgba(95,211,166,.18);color:#5fd3a6}
+.g-F{background:rgba(90,170,230,.18);color:#5aaae6}
+.g-I{background:rgba(220,120,160,.18);color:#dc78a0}
+.g-P{background:rgba(120,190,120,.18);color:#78be78}
+
+/* ---------- species cards ---------- */
+.spgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.spc{position:relative;background:rgba(255,255,255,.05);border-radius:9px;overflow:hidden;
+  display:flex;flex-direction:column}
+.spc img,.spc .noimg{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;
+  background:rgba(255,255,255,.06)}
+.spc .noimg{display:flex;align-items:center;justify-content:center;font-size:10px;
+  font-weight:700;letter-spacing:.05em;color:var(--dim-2)}
+.spc .g{position:absolute;top:5px;left:5px;backdrop-filter:blur(6px)}
+.spc figcaption{padding:6px 7px 7px}
+.spc figcaption b{display:block;font-size:11.5px;font-weight:600;line-height:1.3}
+.spc figcaption i{display:block;font-size:9.5px;color:var(--dim-2);font-style:italic;
+  margin-top:2px;line-height:1.3}
+.credit{margin-top:9px;font-size:9.5px;color:var(--dim-2);line-height:1.5}
+.lgsep{font-size:9px;letter-spacing:.11em;text-transform:uppercase;color:var(--dim-2);
+  margin:9px 0 5px;padding-top:8px;border-top:1px solid var(--line)}
+.lgsep:first-of-type{margin-top:2px;padding-top:0;border-top:none}
+
+/* ---------- hover tooltip ---------- */
+#tip{position:fixed;z-index:30;pointer-events:none;padding:7px 11px;border-radius:8px;
+  background:rgba(6,10,18,.93);border:1px solid var(--line-2);font-size:12px;display:none;
+  max-width:250px;box-shadow:0 6px 24px rgba(0,0,0,.5)}
+#tip.on{display:block}
+#tip b{display:block;font-weight:600;line-height:1.35}
+#tip span{display:block;font-size:10.5px;color:var(--dim-2);margin-top:2px}
+
+/* ---------- hint / attribution ---------- */
+#hint{position:fixed;bottom:38px;left:50%;transform:translateX(-50%);z-index:15;font-size:11.5px;
+  color:var(--dim-2);text-align:center;pointer-events:none;transition:opacity .5s;line-height:1.7}
+#hint.hide{opacity:0}
+#hint kbd{background:rgba(255,255,255,.09);border-radius:4px;padding:1.5px 5px;font-family:inherit;font-size:10.5px}
+#credits{position:fixed;bottom:7px;left:50%;transform:translateX(-50%);z-index:14;font-size:9.5px;
+  color:rgba(255,255,255,.24);text-align:center;white-space:nowrap}
+#credits a{color:inherit;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.14)}
+#credits a:hover{color:var(--dim)}
+#back{position:fixed;top:14px;left:50%;transform:translateX(-50%);z-index:20;font-size:11.5px;
+  color:var(--dim-2);text-decoration:none;padding:7px 13px;border-radius:20px;
+  background:rgba(14,19,30,.6);border:1px solid var(--line);backdrop-filter:blur(10px)}
+#back:hover{color:var(--txt);border-color:var(--line-2)}
+#fps{position:fixed;top:14px;left:50%;transform:translate(-50%,34px);z-index:20;font-size:10px;
+  color:var(--dim-2);font-variant-numeric:tabular-nums;display:none}
+#fps.on{display:block}
+
+#nogl{position:fixed;inset:0;display:none;align-items:center;justify-content:center;padding:30px;
+  text-align:center;color:var(--dim);z-index:200;background:var(--bg);line-height:1.7}
+
+@media (max-width:820px){
+  #brand{display:none}
+  #top{width:calc(100vw - 28px)}
+  #searchwrap{width:100%}
+  #search{width:100%}
+  #results{width:100%;max-height:46vh}
+  #leftcol{left:14px;right:14px;width:auto;top:auto;bottom:14px;max-height:none}
+  #legend{display:none!important}
+  #layers{padding:11px}
+  .lgrid{grid-template-columns:1fr 1fr 1fr}
+  .ctl{margin-top:10px}
+  .togrow{margin-top:9px}
+  /* info becomes a bottom sheet that covers the layer switcher */
+  #info{width:calc(100vw - 28px);max-height:62vh;top:auto;bottom:14px;right:14px;
+    transform:translateY(calc(100% + 24px))}
+  #info.on{transform:none}
+  #hint,#back,#credits,#fps{display:none}
+}
+</style>
+</head>
+<body>
+
+<canvas id="gl"></canvas>
+
+<div id="loader">
+  <div class="lring"></div>
+  <div id="lmsg">Loading the biosphere…</div>
+  <div class="lbar"><i id="lfill"></i></div>
+</div>
+
+<div id="nogl"><div><b>WebGL 2 is required</b><br>This globe needs a browser with WebGL&nbsp;2 support.<br>Try a recent Chrome, Firefox, Edge or Safari.</div></div>
+
+<div id="top">
+  <div class="panel" id="brand"><b>Biosphere</b><span>land &amp; sea</span></div>
+  <div id="searchwrap">
+    <span class="sicon">⌕</span>
+    <input id="search" type="text" placeholder="Search a region, biome or place…" autocomplete="off" spellcheck="false">
+    <div class="panel" id="results"></div>
+  </div>
+</div>
+
+<a id="back" href="../index.html">← amirabed.com</a>
+<div id="fps"></div>
+
+<div id="leftcol">
+<div class="panel" id="legend"></div>
+<div class="panel" id="layers">
+  <div class="ltitle">Layer</div>
+  <div class="lgrid" id="lgrid"></div>
+  <div class="ctl"><label>Blend</label><input id="opacity" type="range" min="0" max="100" value="80"></div>
+  <div class="togrow">
+    <label class="tog"><input type="checkbox" id="tRelief" checked>Relief</label>
+    <label class="tog"><input type="checkbox" id="tSpin">Spin</label>
+    <label class="tog"><input type="checkbox" id="tFps">FPS</label>
+  </div>
+</div>
+</div>
+
+<div class="panel" id="info">
+  <div id="ihead">
+    <button id="iclose" title="Close">✕</button>
+    <div id="iname"></div>
+    <div id="imeta"></div>
+  </div>
+  <div id="ibody"></div>
+</div>
+
+<div id="tip"></div>
+<div id="hint">Drag to spin · scroll to zoom · click any region of land or sea for its species<br><kbd>↑↓←→</kbd> rotate &nbsp;<kbd>+</kbd><kbd>−</kbd> zoom</div>
+<div id="credits">Land: <a href="https://ecoregions.appspot.com/" target="_blank" rel="noopener">RESOLVE 2017</a> · Sea: <a href="https://www.marineregions.org/sources.php#meow" target="_blank" rel="noopener">MEOW/PPOW</a> · Climate: <a href="https://www.worldclim.org/" target="_blank" rel="noopener">WorldClim 2.1</a> · Imagery: <a href="https://visibleearth.nasa.gov/collection/1484/blue-marble" target="_blank" rel="noopener">NASA Blue Marble</a> · Photos: <a href="https://commons.wikimedia.org/" target="_blank" rel="noopener">Wikimedia Commons</a></div>
+
+<script src="globe.js"></script>
+</body>
+</html>
