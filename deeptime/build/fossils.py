@@ -6,10 +6,14 @@ taxa found at each one.  Localities are given a plate id from the same model the
 globe is drawn with, so a site stays glued to its own continent as the page
 scrubs through time instead of floating off it.
 
+Also writes ../data/places.json: every country and state the localities fall
+in, with a representative point and the plate it rides on, so the search box can
+fly the globe to a modern place at whatever age is on screen.
+
 Writes ../data/ch/<chapter>.json, one file per chapter, loaded on demand.
 Raw API responses are cached in src/pbdb/, so re-runs are cheap.
 """
-import json, os, sys, time, urllib.parse, urllib.request
+import hashlib, json, math, os, sys, time, urllib.parse, urllib.request
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 SRC = os.path.join(HERE, 'src')
@@ -77,6 +81,11 @@ def get(path, params, tag):
     return d
 
 
+def country_names():
+    recs = get('config.json', {'show': 'countries'}, 'countries').get('records', [])
+    return {r['cod']: r['nam'] for r in recs if r.get('cod') and r.get('nam')}
+
+
 def group_of(rec):
     phylum = rec.get('phl') or ''
     cls = rec.get('cll') or ''
@@ -111,15 +120,15 @@ def thin(sites, model):
     return first + rest[:MAX_SITES - len(first)]
 
 
-def build(ch, loc, model):
+def build(ch, loc, model, countries, places):
     lo, hi = ch['end'], ch['start']
     mid = (lo + hi) / 2
     tag = ch['id']
     print(f"  {ch['name']} ({hi}-{lo} Ma)")
 
     colls = get('colls/list.json',
-                {'max_ma': hi, 'min_ma': lo, 'show': 'paleoloc,strat',
-                 'limit': 'all'}, f'{tag}_colls').get('records', [])
+                {'max_ma': hi, 'min_ma': lo, 'show': 'loc,paleoloc,strat',
+                 'limit': 'all'}, f'{tag}_colls_loc').get('records', [])
     if not colls:
         print('    no collections')
         return None, set()
@@ -138,11 +147,16 @@ def build(ch, loc, model):
             unplaced += 1
             continue
         plon, plat = model.reconstruct(plate, mid, lon, lat)
+        country = countries.get(c.get('cc2') or '', '')
+        state = (c.get('stp') or '').strip()
+        if state in ('__', '?'):
+            state = ''
         sites.append({
             'id': c['oid'].split(':')[1], 'lon': lon, 'lat': lat, 'plate': plate,
             'plon': plon, 'plat': plat, 'n': int(c.get('noc') or 0),
             'name': clean(c.get('nam')), 'fm': clean(c.get('sfm') or '', 40),
             'ea': float(c.get('eag') or hi), 'la': float(c.get('lag') or lo),
+            'country': country, 'state': state,
         })
 
     kept = thin(sites, model)
@@ -154,9 +168,10 @@ def build(ch, loc, model):
     ids = [s['id'] for s in kept]
     for i in range(0, len(ids), 150):
         batch = ids[i:i + 150]
+        key = hashlib.md5(','.join(batch).encode()).hexdigest()[:12]
         d = get('occs/list.json',
                 {'coll_id': ','.join(batch), 'show': 'class', 'limit': 'all'},
-                f'{tag}_occs_{i//150}')
+                f'{tag}_occs_{key}')
         for r in d.get('records', []):
             cid = (r.get('cid') or '').split(':')[-1]
             nm = r.get('tna') or ''
@@ -174,7 +189,19 @@ def build(ch, loc, model):
             names.append(n)
         return i
 
-    S = {k: [] for k in ('lon', 'lat', 'plate', 'ea', 'la', 'n', 'g', 'nm', 'fm', 'tx')}
+    locs, lindex = [], {}
+    def loc_id(country, state):
+        label = ', '.join(x for x in (state, country) if x)
+        if not label:
+            return -1
+        i = lindex.get(label)
+        if i is None:
+            i = lindex[label] = len(locs)
+            locs.append(label)
+        return i
+
+    S = {k: [] for k in ('lon', 'lat', 'plate', 'ea', 'la', 'n', 'g', 'nm', 'fm',
+                         'tx', 'lc')}
     for s in kept:
         occ = by_coll.get(s['id'], [])
         seen, tx, gcount = set(), [], {}
@@ -192,6 +219,17 @@ def build(ch, loc, model):
         S['g'].append(max(gcount, key=gcount.get) if gcount else OTHER)
         S['nm'].append(s['name']); S['fm'].append(s['fm'])
         S['tx'].append(tx)
+        S['lc'].append(loc_id(s['country'], s['state']))
+
+        for label, kind in ((s['country'], 'country'),
+                            (', '.join(x for x in (s['state'], s['country']) if x)
+                             if s['state'] else None, 'region')):
+            if not label:
+                continue
+            rec = places.setdefault(label, {'n': 0, 'k': kind, 'pts': []})
+            rec['n'] += 1
+            if len(rec['pts']) < 400:
+                rec['pts'].append((s['lon'], s['lat'], s['plate']))
 
     # the chapter's species roster and the shape of its biota
     taxa = get('occs/taxa.json',
@@ -220,9 +258,43 @@ def build(ch, loc, model):
         'groups': [g[0] for g in GROUPS] + ['Other'],
         'roster': roster,
         'names': names,
+        'locs': locs,
         'sites': S,
     }
     return out, {s['plate'] for s in kept}
+
+
+def gazetteer(places):
+    """One searchable entry per place: the locality nearest the middle of its
+    own localities, so the point is always somewhere fossils actually are."""
+    out = []
+    for label, rec in places.items():
+        pts = rec['pts']
+        if not pts:
+            continue
+        # mean direction on the sphere, so places spanning the date line behave
+        x = y = z = 0.0
+        for lon, lat, _ in pts:
+            la, lo = math.radians(lat), math.radians(lon)
+            c = math.cos(la)
+            x += c * math.cos(lo); y += c * math.sin(lo); z += math.sin(la)
+        n = math.sqrt(x * x + y * y + z * z)
+        if n < 1e-9:
+            lon0, lat0, plate = pts[0]
+        else:
+            x, y, z = x / n, y / n, z / n
+            best, bd = pts[0], -2.0
+            for lon, lat, plate in pts:
+                la, lo = math.radians(lat), math.radians(lon)
+                c = math.cos(la)
+                d = c * math.cos(lo) * x + c * math.sin(lo) * y + math.sin(la) * z
+                if d > bd:
+                    bd, best = d, (lon, lat, plate)
+            lon0, lat0, plate = best
+        out.append({'n': label, 'k': rec['k'], 'c': rec['n'],
+                    'lon': round(lon0, 3), 'lat': round(lat0, 3), 'p': plate})
+    out.sort(key=lambda r: -r['c'])
+    return out
 
 
 def main():
@@ -231,7 +303,10 @@ def main():
     loc = locate.PlateLocator(f'{SRC}/StaticPolygons/static_polygons.gpmlz')
     model = rotmodel.load(SRC)
     os.makedirs(OUT, exist_ok=True)
+    countries = country_names()
+    print(f'{len(countries)} country codes')
 
+    places = {}
     plates, index = set(), {}
     for ch in CHAPTERS:
         if only and ch['id'] != only:
@@ -239,7 +314,7 @@ def main():
         if ch['start'] > 1000:          # PBDB has essentially nothing this old
             print(f"  {ch['name']}: skipped (before the fossil record)")
             continue
-        data, used = build(ch, loc, model)
+        data, used = build(ch, loc, model, countries, places)
         if not data:
             continue
         plates |= used
@@ -255,8 +330,14 @@ def main():
 
     if not only:
         json.dump(index, open(f'{OUT}/index.json', 'w'), separators=(',', ':'))
+        gaz = gazetteer(places)
+        json.dump(gaz, open(f'{os.path.dirname(OUT)}/places.json', 'w'),
+                  separators=(',', ':'), ensure_ascii=False)
+        plates |= {p['p'] for p in gaz}
         json.dump(sorted(plates), open(f'{SRC}/fossil_plates.json', 'w'))
         print(f'\n{len(index)} chapters with fossils, {len(plates)} plates used')
+        print(f'places.json: {len(gaz)} searchable places '
+              f'({sum(1 for p in gaz if p["k"] == "country")} countries)')
         print('run plates.py after this so those plates get rotations')
 
 

@@ -1,10 +1,11 @@
 """Find a photograph for every species and scene named in chapters.py.
 
 Looks each name up on the English Wikipedia, takes the article's lead image,
-then asks Commons who made it and under what licence so the page can credit it.
-Only URLs are stored - no image is copied into this repository.
+then asks Commons who made it, under what licence, and where its file page is,
+so the page can credit it and link back.  Only URLs are stored - no image is
+copied into this repository.
 
-Output: ../data/images.json  { "sp:Name" | "sc:Title": {u, a, l, c} }
+Output: ../data/images.json  { "sp:Name" | "sc:Title": {u, a, l, p, c} }
 Re-runs reuse src/img_cache.json, so only new names hit the network.
 """
 import html, json, os, re, sys, time, urllib.parse, urllib.request
@@ -128,15 +129,16 @@ def credits(files, host):
     for batch in chunks(files, 40):
         d = api(host, {
             'action': 'query', 'format': 'json', 'formatversion': '2',
-            'prop': 'imageinfo', 'iiprop': 'extmetadata',
+            'prop': 'imageinfo', 'iiprop': 'extmetadata|url',
             'titles': '|'.join('File:' + f for f in batch)})
         for p in d.get('query', {}).get('pages', []):
             ii = (p.get('imageinfo') or [{}])[0].get('extmetadata', {})
             if not ii:
                 continue
-            author = strip_html(ii.get('Artist', {}).get('value', ''))[:70]
+            author = strip_html(ii.get('Artist', {}).get('value', ''))
             lic = strip_html(ii.get('LicenseShortName', {}).get('value', ''))[:34]
-            out[p['title'][5:].replace('_', ' ')] = (author, lic)
+            page = (p.get('imageinfo') or [{}])[0].get('descriptionurl', '')
+            out[p['title'][5:].replace('_', ' ')] = (author, lic, page)
         print(f'  ...{len(out)}/{len(files)}', end='\r', flush=True)
         time.sleep(0.15)
     print(' ' * 30, end='\r')
@@ -156,6 +158,21 @@ def thumb_url(name):
         if u:
             return u.split('?')[0]
     return ''
+
+
+def tidy_author(a):
+    """Credit lines have to fit under a thumbnail.  A semicolon-separated list of
+    contributors becomes "First et al." rather than being cut off mid-name."""
+    a = (a or '').strip().rstrip(',;')
+    if not a:
+        return ''
+    if ';' in a:
+        first = a.split(';')[0].strip().rstrip(',')
+        return f'{first} et al.'
+    if len(a) > 64:
+        cut = a[:64].rsplit(' ', 1)[0].rstrip(',;')
+        return cut + '\u2026'
+    return a
 
 
 def main():
@@ -191,7 +208,8 @@ def main():
             print(' ' * 30, end='\r')
         json.dump(cache, open(CACHE, 'w'))
 
-    files = sorted({v['f'] for v in cache.values() if v and v.get('f') and 'a' not in v})
+    files = sorted({v['f'] for v in cache.values()
+                    if v and v.get('f') and ('a' not in v or 'p' not in v)})
     if files:
         print(f'credits for {len(files)} files...')
         cr = credits(files, 'commons.wikimedia.org')
@@ -200,7 +218,7 @@ def main():
             cr.update(credits(rest, 'en.wikipedia.org'))
         for v in cache.values():
             if v and v.get('f'):
-                v['a'], v['l'] = cr.get(v['f'].replace('_', ' '), ('', ''))
+                v['a'], v['l'], v['p'] = cr.get(v['f'].replace('_', ' '), ('', '', ''))
         json.dump(cache, open(CACHE, 'w'))
 
     # entries that came from the article-body fallback have no URL yet
@@ -218,7 +236,9 @@ def main():
     for k, v in cache.items():
         if not v or not v.get('u'):
             continue
-        rec = {'u': v['u'], 'a': v.get('a', ''), 'l': v.get('l', '')}
+        rec = {'u': v['u'], 'a': tidy_author(v.get('a', '')), 'l': v.get('l', '')}
+        if v.get('p'):
+            rec['p'] = v['p']
         if k.startswith('sc:') and v.get('c'):
             rec['c'] = v['c']
         out[k] = rec

@@ -120,7 +120,17 @@ SOURCES = [
     ('CO₂', 'Foster, Royer & Lunt (2017), Nature Communications 8; GEOCARB for '
             'the Precambrian.'),
     ('O₂', 'Berner GEOCARBSULF and Lenton et al. (2016).'),
-    ('Sea level', 'Haq & Schutter (2008) and Miller et al. (2005), smoothed.'),
+    ('Sea level', 'Haq & Schutter (2008) and Miller et al. (2005), smoothed. '
+                  'Measured against present-day sea level as the zero point.'),
+    ('Ice line', 'Read off the glacial record itself — Huronian, Sturtian and '
+                 'Marinoan, Hirnantian, Karoo, and the Cenozoic build-up — rather '
+                 'than taken from a published series. One symmetric latitude '
+                 'stands in for two hemispheres that are rarely symmetric, so it '
+                 'is an index of how glaciated the world is, not a measured margin.'),
+    ('Land plant cover', 'Sketched from the plant fossil record: cryptospores in '
+                         'the Ordovician, forests from the mid-Devonian, the '
+                         'Carboniferous peak, the end-Permian collapse and the '
+                         'recovery after it. Indicative only.'),
     ('Images', 'Wikipedia and Wikimedia Commons; each photo credits its author '
                'and licence. No image is copied into this site.'),
 ]

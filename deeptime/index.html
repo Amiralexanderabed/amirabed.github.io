@@ -41,6 +41,16 @@ a{color:inherit}
 #stage:after{content:"";position:absolute;left:0;right:0;bottom:0;height:120px;pointer-events:none;
   background:linear-gradient(0deg,rgba(4,6,11,.5),transparent);z-index:1}
 #stage .over{position:absolute;pointer-events:none;z-index:2}
+
+/* names pinned to whatever the search turned up */
+#labels{inset:0;overflow:hidden;z-index:3}
+.plab{position:absolute;transform:translate(-50%,-50%);white-space:nowrap;pointer-events:none;
+  font-size:10.5px;font-weight:600;letter-spacing:.01em;color:#fff;padding:3px 8px;
+  border-radius:20px;background:rgba(8,11,18,.82);border:1px solid var(--accent);
+  box-shadow:0 3px 14px rgba(0,0,0,.6);opacity:0;transition:opacity .2s}
+.plab.on{opacity:1}
+.plab.big{font-size:12px;padding:5px 11px;background:var(--accent);color:#0a0c12;
+  border-color:transparent;letter-spacing:.03em}
 #stage .over *{pointer-events:auto}
 
 /* age + climate readout, top-left of the globe */
@@ -51,13 +61,72 @@ a{color:inherit}
 #chip{display:inline-flex;align-items:center;gap:7px;padding:5px 11px;border-radius:999px;
   background:var(--accent-soft);border:1px solid var(--accent);color:var(--accent);
   font-size:11.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase}
-#stats{display:flex;gap:7px;flex-wrap:wrap;max-width:min(430px,80%)}
+#stats{display:flex;gap:7px;flex-wrap:wrap;max-width:min(468px,84%);align-items:stretch}
 .stat{background:var(--panel);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
   border:1px solid var(--line);border-radius:9px;padding:6px 9px;min-width:74px}
 .stat b{display:block;font-size:14.5px;font-weight:600;line-height:1.15;font-variant-numeric:tabular-nums}
 .stat span{display:block;font-size:9px;color:var(--dim-2);letter-spacing:.09em;
   text-transform:uppercase;margin-top:2px}
 .stat i{font-style:normal;font-size:10px;color:var(--dim);margin-left:3px}
+/* ---------- search ---------- */
+#searchwrap{position:relative;width:296px;max-width:100%}
+#q{width:100%;padding:9px 30px 9px 32px;border-radius:10px;border:1px solid var(--line);
+  background:var(--panel);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  color:var(--txt);font-family:var(--ui);font-size:12.5px;outline:none;box-shadow:var(--shadow)}
+#q:focus{border-color:var(--accent)}
+#q::placeholder{color:var(--dim-2)}
+#q::-webkit-search-cancel-button{display:none}
+#sicon{position:absolute;left:11px;top:50%;transform:translateY(-50%);width:14px;height:14px;
+  fill:none;stroke:var(--dim-2);stroke-width:2;stroke-linecap:round;pointer-events:none}
+#qx{position:absolute;right:8px;top:50%;transform:translateY(-50%);width:19px;height:19px;
+  border:none;border-radius:5px;background:rgba(255,255,255,.09);color:var(--dim);cursor:pointer;
+  font-size:10px;line-height:1;display:none}
+#qx.on{display:block}
+#qx:hover{background:rgba(255,255,255,.2);color:var(--txt)}
+#qres{position:absolute;top:calc(100% + 6px);left:0;width:min(360px,86vw);max-height:340px;
+  overflow-y:auto;background:var(--panel);backdrop-filter:blur(16px);
+  -webkit-backdrop-filter:blur(16px);border:1px solid var(--line-2);border-radius:var(--r);
+  box-shadow:var(--shadow);padding:5px;display:none;z-index:6}
+#qres.on{display:block}
+.qr{display:flex;align-items:center;gap:9px;padding:7px 9px;border-radius:8px;cursor:pointer}
+.qr:hover,.qr.sel{background:rgba(255,255,255,.09)}
+.qr .kind{flex:none;font-size:8.5px;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--dim-2);width:56px}
+.qr .nm{flex:1;font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.qr .nm b{font-weight:600;color:var(--accent)}
+.qr .sub{flex:none;font-size:10.5px;color:var(--dim-2)}
+.qempty{padding:11px 10px;font-size:12px;color:var(--dim-2);line-height:1.5}
+#filter{display:none;align-items:center;gap:8px;padding:6px 10px;border-radius:9px;
+  background:var(--accent-soft);border:1px solid var(--accent);font-size:11.5px;color:var(--txt);
+  max-width:296px}
+#filter.on{display:flex}
+#fmsg{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#fclear{flex:none;background:none;border:none;color:var(--accent);cursor:pointer;
+  font-family:var(--ui);font-size:11px;font-weight:600;text-decoration:underline;padding:0}
+
+#qmark{width:26px;border-radius:9px;border:1px solid var(--line);background:var(--panel);
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);color:var(--dim-2);
+  font-family:var(--ui);font-size:12px;font-weight:600;cursor:pointer;flex:none}
+#qmark:hover,#qmark.on{color:var(--accent);border-color:var(--accent)}
+
+/* what the six readouts actually mean */
+#about{top:16px;left:16px;width:min(392px,calc(100% - 32px));max-height:calc(100% - 32px);
+  background:var(--panel);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  border:1px solid var(--line-2);border-radius:var(--r);box-shadow:var(--shadow);
+  display:none;flex-direction:column;z-index:5}
+#about.on{display:flex}
+#about header{padding:14px 15px 12px;border-bottom:1px solid var(--line);position:relative}
+#about h3{font-size:14px;font-weight:600}
+#about .body{overflow-y:auto;padding:6px 15px 14px}
+#ax{position:absolute;top:11px;right:11px;width:24px;height:24px;border-radius:7px;border:none;
+  background:rgba(255,255,255,.08);color:var(--dim);cursor:pointer;font-size:13px;line-height:1}
+#ax:hover{background:rgba(255,255,255,.16);color:var(--txt)}
+.metric{padding:11px 0;border-bottom:1px solid rgba(255,255,255,.06)}
+.metric:last-child{border-bottom:none}
+.metric b{display:block;font-size:12px;font-weight:600;margin-bottom:3px}
+.metric b em{font-style:normal;color:var(--dim-2);font-weight:500;margin-left:5px;font-size:11px}
+.metric p{font-size:12px;line-height:1.55;color:var(--dim)}
+.metric cite{display:block;font-style:normal;font-size:10.5px;color:var(--dim-2);margin-top:5px}
 
 /* globe controls, bottom-right of the stage */
 #tools{right:16px;bottom:16px;display:flex;flex-direction:column;gap:7px}
@@ -182,6 +251,16 @@ h3.sec:after{content:"";flex:1;height:1px;background:var(--line)}
 .gal figcaption{padding:9px 11px;font-size:11.5px;line-height:1.5;color:var(--dim)}
 .gal .cr{display:block;font-size:9.5px;color:var(--dim-2);margin-top:4px}
 
+/* every photograph links back to the file page it came from */
+a.shot{display:block;position:relative;line-height:0}
+a.shot:after{content:"↗";position:absolute;top:7px;right:7px;width:19px;height:19px;
+  border-radius:6px;background:rgba(6,9,15,.72);color:#fff;font-size:10px;line-height:19px;
+  text-align:center;opacity:0;transition:opacity .18s;pointer-events:none}
+a.shot:hover:after,a.shot:focus-visible:after{opacity:1}
+a.shot:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+a.src{text-decoration:none;border-bottom:1px solid rgba(255,255,255,.13)}
+a.src:hover{color:var(--dim);border-bottom-color:rgba(255,255,255,.34)}
+
 .events{list-style:none}
 .events li{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--line)}
 .events li:last-child{border-bottom:none}
@@ -203,7 +282,7 @@ h3.sec:after{content:"";flex:1;height:1px;background:var(--line)}
 .card .t b{display:block;font-family:var(--prose);font-style:italic;font-size:14.5px;
   font-weight:500;margin-bottom:4px}
 .card .t p{font-size:11.5px;line-height:1.5;color:var(--dim)}
-.card .cr{display:block;font-size:9px;color:var(--dim-2);margin-top:5px}
+.card .cr{display:block;font-size:9px;color:var(--dim-2);margin-top:5px;width:fit-content}
 
 .bars{display:flex;flex-direction:column;gap:6px;margin-top:4px}
 .bar{display:grid;grid-template-columns:118px 1fr 52px;align-items:center;gap:9px;font-size:11.5px}
@@ -278,6 +357,9 @@ h3.sec:after{content:"";flex:1;height:1px;background:var(--line)}
   #chip{font-size:9px;padding:3px 8px}
   #age{font-size:23px}
   #age small{font-size:10px;display:block;margin:3px 0 0}
+  #searchwrap{width:100%}
+  #qres{width:min(100%,86vw);max-height:44vh}
+  #filter{max-width:none}
   #stats{max-width:none;flex-wrap:nowrap;overflow-x:auto;padding-bottom:2px;
     scrollbar-width:none;-ms-overflow-style:none}
   #stats::-webkit-scrollbar{display:none}
@@ -288,7 +370,8 @@ h3.sec:after{content:"";flex:1;height:1px;background:var(--line)}
   #tools{right:12px;bottom:12px;flex-direction:row}
   #stale{display:none!important}
   #legend,#hint,#back{display:none}
-  #site{left:12px;right:12px;width:auto;bottom:12px;max-height:44vh}
+  #about{top:10px;left:10px;width:calc(100% - 20px);max-height:calc(100% - 20px)}
+  #site{left:12px;right:12px;width:auto;bottom:12px;max-height:min(34vh,240px)}
   .life,.gal{grid-template-columns:1fr}
   .roster .list{columns:2}
   #railname{display:none}
@@ -300,10 +383,23 @@ h3.sec:after{content:"";flex:1;height:1px;background:var(--line)}
 
 <div id="stage">
   <canvas id="gl"></canvas>
+  <div class="over" id="labels"></div>
   <div class="over" id="hud">
     <div id="chip"></div>
     <div id="age"></div>
     <div id="stats"></div>
+    <div id="searchwrap">
+      <svg id="sicon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M16.5 16.5L21 21"/></svg>
+      <input id="q" type="search" autocomplete="off" spellcheck="false"
+             placeholder="Search a place, fossil or locality" aria-label="Search places, fossils and localities">
+      <button id="qx" aria-label="Clear search">✕</button>
+      <div id="qres" role="listbox"></div>
+    </div>
+    <div id="filter"><span id="fmsg"></span><button id="fclear">show all</button></div>
+  </div>
+  <div class="over" id="about">
+    <header><h3>What the readouts mean</h3><button id="ax" aria-label="Close">✕</button></header>
+    <div class="body" id="abody"></div>
   </div>
   <div class="over" id="tools">
     <button class="tool" id="zin" title="Zoom in" aria-label="Zoom in"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M11 8v6M8 11h6M16.5 16.5L21 21"/></svg></button>
