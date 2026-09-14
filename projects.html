@@ -1,106 +1,165 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <title>Triple A</title>
-        <link rel="icon" href="https://raw.githubusercontent.com/Amiralexanderabed/amiralexanderabed.github.io/master/Triple_A_Logo.1.jpg" type="image/png">
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" type="text/css" href="css/style.css">
-        <script src="https://kit.fontawesome.com/f5adb49572.js" crossorigin="anonymous"></script>
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    </head>
-    <header>
-        <nav>
-            <ul>
-                <li><a href="index.html">Home<a></li>
-                <li><a href="experience.html">Experience</a></li>
-                <li><a class="active" href="projects.html">Projects</a></li>
-                <li><a href="photos.html">Photos</a></li>
-                <a class="resume-button" href="assets/Amir_Abed_2025.pdf" target="_blank"><button class="resume-button">Resume</button></a>
-            </ul>
-        </nav>
-    </header>
-    <body>
-        <br></br>
-        <div class="center-text"><h1>Projects</h1></div>
-        <br></br>
-        <div class="center-text"><p>This is a line following robot I collaborated with members of a group to create.
-            The videos I took for the robot in action are linked in the below images. </p></div>
-        <div class="showcase img">
-        <div class="inline-block"><a href="https://youtu.be/XEF8VUCSj0U"><img src="images/Line_Following_Robot.jpg" id=logo style="max-width: 400px;"></a></div>
-        <div class="inline-block"><a href="https://youtu.be/hxOUH_c7pbg"><img src="images/Line_Following_Robot_2.jpeg" id=logo_2 style="max-width: 400px;"></a></div>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Projects — Amir A. Abed</title>
+  <meta name="description" content="Interactive WebGL2 data visualizations, embedded systems, computer vision and signal processing projects by Amir A. Abed.">
+  <link rel="icon" href="Triple_A_Logo.1.jpg" type="image/jpeg">
+  <link rel="stylesheet" type="text/css" href="css/style.css?v=2026-09g">
+  <script src="https://kit.fontawesome.com/f5adb49572.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+  <header class="site-header">
+    <nav class="site-nav">
+      <a href="index.html">Home</a>
+      <a href="experience.html">Experience</a>
+      <a class="active" href="projects.html">Projects</a>
+      <a href="photos.html">Photos</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="page-head">
+      <h1>Projects</h1>
+      <p>Passion Projects - some I work on the side, some I did for school, and some were just for fun.</p>
+    </div>
+
+    <div class="wrap">
+
+      <section class="section">
+        <h2 class="section-title">Interactive Websites</h2>
+        <div class="project-grid">
+
+          <article class="project-card">
+            <a class="project-cover" href="https://mendelsgardens.com" target="_blank" rel="noopener">
+              <img src="images/cover-mendelsgardens.svg" alt="A seedling germinating in soil, between a sowing date and a plant-out date">
+            </a>
+            <div class="project-body">
+              <div class="project-meta">2026 · Solo</div>
+              <h3><a href="https://mendelsgardens.com" target="_blank" rel="noopener">Mendel's Gardens</a><span class="badge-wip">Work in progress</span></h3>
+              <p>A seed germination reference: published propagation protocols turned into structured, ordered steps, and those steps turned into real sowing and plant-out dates.</p>
+              <p>Actively being built — expect rough edges.</p>
+              <div class="tags"><span class="tag">Astro</span><span class="tag">TypeScript</span><span class="tag">SQLite</span><span class="tag">Python</span></div>
+              <div class="project-links">
+                <a href="https://mendelsgardens.com" target="_blank" rel="noopener">mendelsgardens.com <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+              </div>
+            </div>
+          </article>
+
+          <article class="project-card">
+            <a class="project-cover" href="globe/index.html">
+              <img src="images/cover-biosphere.svg" alt="Stylised globe showing coloured ecoregions">
+            </a>
+            <div class="project-body">
+              <div class="project-meta">2026 · Solo</div>
+              <h3><a href="globe/index.html">Biosphere</a><span class="badge-live">Live</span></h3>
+              <p>An interactive globe of life on Earth. Spin it and explore <strong>846 land ecoregions and 269 marine regions</strong> — each with its biome, Köppen climate classification, and the species that live there.</p>
+              <p>Built the whole pipeline: Python scripts that fetch and rasterize the source geodata, and a dependency-free WebGL2 renderer that draws the result at interactive frame rates.</p>
+              <div class="tags"><span class="tag">WebGL2</span><span class="tag">JavaScript</span><span class="tag">Python</span><span class="tag">GeoJSON</span><span class="tag">Data pipeline</span></div>
+              <div class="project-links">
+                <a href="globe/index.html">Open Biosphere <i class="fa-solid fa-arrow-right"></i></a>
+              </div>
+            </div>
+          </article>
+
+          <article class="project-card">
+            <a class="project-cover" href="deeptime/index.html">
+              <img src="images/cover-deeptime.svg" alt="Stylised geological strata spanning deep time">
+            </a>
+            <div class="project-body">
+              <div class="project-meta">2026 · Solo</div>
+              <h3><a href="deeptime/index.html">Deep Time</a><span class="badge-live">Live</span></h3>
+              <p>A scroll-driven history of Earth across <strong>4.6 billion years</strong>. Continents drift continuously on a globe reconstructed from the Müller plate rotation model, alongside 23 chapters from the Hadean to now.</p>
+              <p>Fossil localities come from the Paleobiology Database and are clickable at every period. Plate rotations are validated against the GPlates Web Service to a median agreement of 0.000035°.</p>
+              <div class="tags"><span class="tag">WebGL2</span><span class="tag">Plate tectonics</span><span class="tag">Paleobiology DB</span><span class="tag">Python</span></div>
+              <div class="project-links">
+                <a href="deeptime/index.html">Open Deep Time <i class="fa-solid fa-arrow-right"></i></a>
+              </div>
+            </div>
+          </article>
+
         </div>
-        
-        
-        <br></br>
-        
-        <div class="center-text"><p>This is the IEEE QP Project I created with a team. It is a RFID scanner device that you put inside your backpack that will notify you through your phone what items 
-            are in your backpack throughout the day and remind you to put important missing items inside. The documentation can be found in the images below. </p></div>
-        <br></br>
-        <!-- <div class="showcase img"> -->
-        <div class="inline-block-4"><a href="https://docs.google.com/document/d/1FvUBplKQTQt-8tn1pA4YW0NVf5P5vHVIas3ml7HNmnA/edit"><img src="images/!ForgettaBoutIt.jpeg" style="max-width: 400px;"></a></div>
-        <div class="inline-block-4"><a href="https://docs.google.com/document/d/1FvUBplKQTQt-8tn1pA4YW0NVf5P5vHVIas3ml7HNmnA/edit"><img src="images/!ForgettaBoutIt_Full.jpeg" style="max-width: 400px;"></a></div>
-        <div class="inline-block-4"><a href="https://docs.google.com/document/d/1FvUBplKQTQt-8tn1pA4YW0NVf5P5vHVIas3ml7HNmnA/edit"><img src="images/HippoCampus_Side.jpeg" style="max-width: 400px;"></a></div>
-        <!-- </div> -->
-            <!-- <p> The documentation can be found <a href=https://docs.google.com/document/d/1FvUBplKQTQt-8tn1pA4YW0NVf5P5vHVIas3ml7HNmnA/edit>here</a>.</p> -->
+      </section>
 
-        <br></br>
-        <br></br>
+      <section class="section">
+        <h2 class="section-title">Embedded &amp; hardware</h2>
+        <p class="section-sub">Team projects from IEEE Quarter Projects and coursework at UC San Diego.</p>
+        <div class="project-grid">
 
-        <div class="center-text"><p>These are automated home light switches that turn on whenever a person sits near the corresponding light in their home.
-            I worked with a team for IEEE QP++ in order to complete this project, using tensor flow, BLE connectivity, and much more. The demonstration video can be found in the images below. </p></div>
-        <br></br>
-        <div class="showcase img">
-        <div class="inline-block"><a href="https://www.youtube.com/watch?v=1CeHj1uYX-4&feature=youtu.be&fbclid=IwAR1QvdIT01cyxmjgJNziqNjwluT_caCnJFyAN2QKmOs5G-crhSStyDpl0j8"><img src="images/light_switch_red.jpg" style="max-width: 400px;"></a></div> 
-        <div class="inline-block"><a href="https://www.youtube.com/watch?v=1CeHj1uYX-4&feature=youtu.be&fbclid=IwAR1QvdIT01cyxmjgJNziqNjwluT_caCnJFyAN2QKmOs5G-crhSStyDpl0j8"><img src="images/light_switch.jpg" id=logo style="max-width: 450px;"></a></div>
-        <!-- <p> The documentation can be found <a href=https://docs.google.com/document/d/1DUh2UiNQVbGoaolyAXz5Tx0ebOG-frUpSngK8u8M5gg/edit>here</a>. And a video 
-          of the project working can be found in the image above. </p> -->
+          <article class="project-card">
+            <a class="project-cover" href="https://www.youtube.com/watch?v=1CeHj1uYX-4" target="_blank" rel="noopener">
+              <img src="images/light_switch_red.jpg" alt="Automated home light switch hardware">
+            </a>
+            <div class="project-body">
+              <div class="project-meta">IEEE QP++ · Team</div>
+              <h3>ENLIGHTEN — occupancy-aware light switches</h3>
+              <p>Automated home light switches that turn on when someone sits down near the corresponding light. Occupancy is detected with a <strong>TensorFlow</strong> vision model; the switches talk over <strong>BLE</strong>.</p>
+              <p>A retrofit design — it drives existing switches rather than requiring rewiring.</p>
+              <div class="tags"><span class="tag">TensorFlow</span><span class="tag">BLE</span><span class="tag">Computer Vision</span><span class="tag">Embedded</span></div>
+              <div class="project-links">
+                <a href="https://www.youtube.com/watch?v=1CeHj1uYX-4" target="_blank" rel="noopener"><i class="fa-brands fa-youtube"></i> Demo video</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="project-card">
+            <a class="project-cover" href="https://docs.google.com/document/d/1FvUBplKQTQt-8tn1pA4YW0NVf5P5vHVIas3ml7HNmnA/edit" target="_blank" rel="noopener">
+              <img src="images/!ForgettaBoutIt_Full.jpeg" alt="ForgettaBoutIt RFID backpack scanner">
+            </a>
+            <div class="project-body">
+              <div class="project-meta">IEEE QP · Team</div>
+              <h3>!ForgettaBoutIt — RFID backpack inventory</h3>
+              <p>An <strong>RFID scanner</strong> that lives inside your backpack, tracks which tagged items are in it through the day, and notifies your phone when something important is missing.</p>
+              <p>I designed the laser-cut acrylic enclosure in Inkscape and contributed to the hardware build.</p>
+              <div class="tags"><span class="tag">RFID</span><span class="tag">Embedded</span><span class="tag">Mobile notifications</span><span class="tag">Enclosure design</span></div>
+              <div class="project-links">
+                <a href="https://docs.google.com/document/d/1FvUBplKQTQt-8tn1pA4YW0NVf5P5vHVIas3ml7HNmnA/edit" target="_blank" rel="noopener"><i class="fa-solid fa-file-lines"></i> Documentation</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="project-card">
+            <a class="project-cover" href="https://youtu.be/XEF8VUCSj0U" target="_blank" rel="noopener">
+              <img src="images/Line_Following_Robot.jpg" alt="Line following robot">
+            </a>
+            <div class="project-body">
+              <div class="project-meta">UC San Diego · Team</div>
+              <h3>Line-following robot</h3>
+              <p>A sensor-guided robot that tracks a printed line and corrects its heading in real time. Built with a team, including the laser-cut chassis and nameplate.</p>
+              <div class="tags"><span class="tag">Embedded C</span><span class="tag">Sensors</span><span class="tag">Control</span><span class="tag">Fabrication</span></div>
+              <div class="project-links">
+                <a href="https://youtu.be/XEF8VUCSj0U" target="_blank" rel="noopener"><i class="fa-brands fa-youtube"></i> Run one</a>
+                <a href="https://youtu.be/hxOUH_c7pbg" target="_blank" rel="noopener"><i class="fa-brands fa-youtube"></i> Run two</a>
+              </div>
+            </div>
+          </article>
+
         </div>
-        <br></br>
-        
-        
-        <div class="center-text"><p>This is a matlab project I worked on in order to find the discretized surface charge
-            distribution of a parallel plate capacitor to formulate a more accurate result 
-            as opposed to using the traditional equation.</p></div>
-        <br></br>
-        <div class="showcase img">
-        <div class="inline-block"><img src="images/surface_ch_den_ppc_2.png" style="max-width: 350px;"></div>
-        <div class="inline-block"><img src="images/Surface_charge_dist_ppc.png" style="max-width: 400px;"></div>
-        <div class="inline-block"><img src="images/surface_charge_den_ppc_3.png" style="max-width: 400px;"></div>
+      </section>
+
+      <section class="section">
+        <h2 class="section-title">More</h2>
+        <div class="focus-grid" style="max-width:420px">
+          <div class="focus-card">
+            <h3>On GitHub</h3>
+            <p>Public repositories and ongoing experiments.</p>
+            <p><a href="https://github.com/Amiralexanderabed" target="_blank" rel="noopener">github.com/Amiralexanderabed</a></p>
+          </div>
         </div>
-          
+      </section>
 
-        <br></br>
-        <br></br>
-        <br></br>
+    </div>
+  </main>
 
-            <div id="footer">
-                <div class="contact">
-                    <div id="contact-div">   
-                        <div class="thecontact-div">
-                            <!-- <li2><a class="btn" href="https://www.facebook.com/amir.abed.5203">
-                            <i1 class="fab fa-facebook-f"></i1>
-                            </a></li2> -->
-                            
-                            <!-- <li2><a class="btn" href="https://www.instagram.com/amiralex2000/">
-                            <i2 class="fab fa-instagram"></i2>
-                            </a></li2> -->
-                            
-                            <!-- <li2><a class="btn" href="https://www.snapchat.com/add/amir.000">
-                            <i3 class="fab fa-snapchat"></i3>
-                            </a></li2> -->
-                            
-                            <li2><a class="btn" href="mailto:alexanderaa2000@gmail.com">
-                            <i4 class="fas fa-envelope-square"></i4>
-                            </a></li2>
-                            
-                            <li2><a class="btn" href="https://www.linkedin.com/in/amir-abed-5b359417a/">
-                            <i5 class="fab fa-linkedin-in"></i5>
-                            </a></li2>
-                        </div>
-                    </div>
-                </div>
-                <p>&copy; Amir Abed 2023</p>
-            </div> 
-    </body>
+  <footer class="site-footer">
+    <div class="social-row">
+      <a href="mailto:alexanderaa2000@gmail.com" aria-label="Email Amir" title="Email"><i class="fa-solid fa-envelope"></i></a>
+      <a href="https://www.linkedin.com/in/amir-abed-5b359417a/" target="_blank" rel="noopener" aria-label="LinkedIn" title="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+      <a href="https://github.com/Amiralexanderabed" target="_blank" rel="noopener" aria-label="GitHub" title="GitHub"><i class="fa-brands fa-github"></i></a>
+    </div>
+    <p>&copy; Amir Abed 2026</p>
+  </footer>
+</body>
 </html>

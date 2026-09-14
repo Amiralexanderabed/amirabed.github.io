@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400" width="800" height="400" role="img" aria-label="Stylised geological strata spanning deep time">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0d1b28"/>
+      <stop offset="100%" stop-color="#132738"/>
+    </linearGradient>
+    <linearGradient id="fade" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#0d1b28" stop-opacity=".85"/>
+      <stop offset="45%" stop-color="#0d1b28" stop-opacity="0"/>
+    </linearGradient>
+    <clipPath id="strataClip"><rect x="0" y="96" width="800" height="304"/></clipPath>
+  </defs>
+
+  <rect width="800" height="400" fill="url(#sky)"/>
+
+  <!-- strata, oldest at the bottom -->
+  <g clip-path="url(#strataClip)">
+    <g>
+      <path d="M0 352h800v48H0z" fill="#3d3b42"/>
+      <path d="M0 330q200 -22 400 0t400 -8v30H0z" fill="#8c4f6d"/>
+      <path d="M0 302q190 -20 400 2t400 -10v36H0z" fill="#b0566a"/>
+      <path d="M0 274q210 -18 400 0t400 -6v32H0z" fill="#4f9a8f"/>
+      <path d="M0 248q200 -20 400 2t400 -8v30H0z" fill="#7a9b52"/>
+      <path d="M0 222q190 -16 400 0t400 -8v28H0z" fill="#a8763f"/>
+      <path d="M0 196q205 -18 400 2t400 -10v30H0z" fill="#5f9c7e"/>
+      <path d="M0 172q195 -14 400 0t400 -6v26H0z" fill="#c9743c"/>
+      <path d="M0 150q200 -16 400 2t400 -8v26H0z" fill="#7e6ca8"/>
+      <path d="M0 130q190 -14 400 0t400 -6v24H0z" fill="#4f86b8"/>
+      <path d="M0 112q205 -14 400 2t400 -8v22H0z" fill="#6aa85f"/>
+      <path d="M0 96q195 -12 400 0t400 -6v20H0z" fill="#d9a24c"/>
+    </g>
+    <!-- fossil markers -->
+    <g fill="#ffffff" opacity=".78">
+      <circle cx="150" cy="286" r="3.4"/><circle cx="322" cy="238" r="3"/>
+      <circle cx="238" cy="206" r="2.6"/><circle cx="470" cy="262" r="3.2"/>
+      <circle cx="596" cy="186" r="2.8"/><circle cx="694" cy="228" r="3"/>
+      <circle cx="404" cy="160" r="2.6"/><circle cx="540" cy="134" r="3"/>
+    </g>
+    <g fill="none" stroke="#ffffff" stroke-opacity=".3" stroke-width="1">
+      <circle cx="150" cy="286" r="9"/><circle cx="470" cy="262" r="9"/><circle cx="540" cy="134" r="9"/>
+    </g>
+  </g>
+
+  <rect width="800" height="400" fill="url(#fade)"/>
+
+  <!-- drifting continents on a horizon arc -->
+  <g opacity=".92">
+    <circle cx="400" cy="-72" r="220" fill="none" stroke="#0088a9" stroke-opacity=".35" stroke-width="1.5"/>
+    <circle cx="400" cy="-72" r="188" fill="none" stroke="#0088a9" stroke-opacity=".2" stroke-width="1"/>
+  </g>
+
+  <!-- time axis -->
+  <g>
+    <line x1="52" y1="72" x2="748" y2="72" stroke="#0088a9" stroke-width="2" stroke-opacity=".75"/>
+    <g fill="#8fc9d9" font-family="Montserrat, sans-serif" font-size="15" font-weight="600">
+      <text x="52" y="56">4.6 Ga</text>
+      <text x="700" y="56">today</text>
+    </g>
+    <g fill="#0088a9">
+      <circle cx="52" cy="72" r="5"/><circle cx="226" cy="72" r="3.4"/><circle cx="400" cy="72" r="3.4"/>
+      <circle cx="574" cy="72" r="3.4"/><circle cx="748" cy="72" r="5"/>
+    </g>
+  </g>
+</svg>

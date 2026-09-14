@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400" width="800" height="400" role="img" aria-label="Stylised globe showing coloured ecoregions">
+  <defs>
+    <radialGradient id="space" cx="50%" cy="45%" r="75%">
+      <stop offset="0%" stop-color="#12263a"/>
+      <stop offset="100%" stop-color="#070d16"/>
+    </radialGradient>
+    <radialGradient id="ocean" cx="38%" cy="32%" r="72%">
+      <stop offset="0%" stop-color="#2f7fa8"/>
+      <stop offset="70%" stop-color="#1b567a"/>
+      <stop offset="100%" stop-color="#0e3450"/>
+    </radialGradient>
+    <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+      <stop offset="70%" stop-color="#0088a9" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#0088a9" stop-opacity="0.42"/>
+    </radialGradient>
+    <clipPath id="sphere"><circle cx="400" cy="200" r="158"/></clipPath>
+  </defs>
+
+  <rect width="800" height="400" fill="url(#space)"/>
+
+  <g fill="#ffffff">
+    <circle cx="80" cy="60" r="1.6" opacity=".8"/><circle cx="150" cy="130" r="1.1" opacity=".5"/>
+    <circle cx="60" cy="240" r="1.3" opacity=".6"/><circle cx="120" cy="330" r="1" opacity=".45"/>
+    <circle cx="215" cy="45" r="1.2" opacity=".6"/><circle cx="700" cy="80" r="1.5" opacity=".75"/>
+    <circle cx="640" cy="180" r="1" opacity=".4"/><circle cx="735" cy="270" r="1.4" opacity=".65"/>
+    <circle cx="670" cy="340" r="1.1" opacity=".5"/><circle cx="580" cy="35" r="1" opacity=".45"/>
+    <circle cx="30" cy="150" r="1" opacity=".4"/><circle cx="770" cy="140" r="1.2" opacity=".55"/>
+  </g>
+
+  <circle cx="400" cy="200" r="186" fill="url(#glow)"/>
+  <circle cx="400" cy="200" r="158" fill="url(#ocean)"/>
+
+  <g clip-path="url(#sphere)">
+    <!-- landmass-like ecoregion patches -->
+    <path d="M292 96c34-16 78-12 104 6 22 15 12 36-6 46-25 14-62 16-88 6-24-9-30-44-10-58z" fill="#4f8f4a"/>
+    <path d="M300 138c30-6 66 0 82 14 12 11 2 26-18 32-28 8-64 4-80-10-13-11-4-32 16-36z" fill="#2d6a3e"/>
+    <path d="M352 196c26-4 54 6 62 24 7 16-10 30-34 32-30 3-58-10-62-28-3-15 12-26 34-28z" fill="#a8bf6a"/>
+    <path d="M330 258c30-8 68 2 80 22 9 15-8 30-34 34-32 5-66-8-72-28-4-14 8-24 26-28z" fill="#d8b26a"/>
+    <path d="M256 178c22-6 44 4 48 20 3 13-12 24-32 25-22 1-40-10-40-24 0-12 10-19 24-21z" fill="#3f6b5a"/>
+    <path d="M470 130c26-8 56 0 66 18 8 15-8 29-32 32-28 4-56-8-60-26-3-13 10-20 26-24z" fill="#4f8f4a"/>
+    <path d="M486 214c22-5 46 4 52 20 5 14-10 26-32 28-26 2-48-9-50-24-2-12 12-21 30-24z" fill="#2d6a3e"/>
+    <path d="M262 60c40-14 96-10 120 8 6 5 2 12-10 15-42 10-96 6-118-8-8-6-2-12 8-15z" fill="#b8c9c4"/>
+    <path d="M340 322c34-8 76 0 88 16 6 9-6 18-28 21-34 4-72-4-78-18-3-8 5-15 18-19z" fill="#b8c9c4"/>
+
+    <!-- graticule -->
+    <g fill="none" stroke="#bfe4ef" stroke-opacity=".26" stroke-width="1">
+      <ellipse cx="400" cy="200" rx="158" ry="52"/>
+      <ellipse cx="400" cy="200" rx="158" ry="104"/>
+      <ellipse cx="400" cy="200" rx="158" ry="145"/>
+      <ellipse cx="400" cy="200" rx="52" ry="158"/>
+      <ellipse cx="400" cy="200" rx="104" ry="158"/>
+      <ellipse cx="400" cy="200" rx="145" ry="158"/>
+      <line x1="242" y1="200" x2="558" y2="200"/>
+    </g>
+  </g>
+
+  <circle cx="400" cy="200" r="158" fill="none" stroke="#0088a9" stroke-opacity=".6" stroke-width="1.5"/>
+</svg>

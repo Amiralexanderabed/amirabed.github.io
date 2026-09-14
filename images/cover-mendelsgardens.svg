@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400" width="800" height="400" role="img" aria-label="A seedling germinating in soil">
+  <defs>
+    <linearGradient id="mgsky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0f2430"/>
+      <stop offset="100%" stop-color="#163a3f"/>
+    </linearGradient>
+    <linearGradient id="mgsoil" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#3d2f26"/>
+      <stop offset="100%" stop-color="#241b15"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="800" height="400" fill="url(#mgsky)"/>
+
+  <!-- soil -->
+  <path d="M0 250q120 -16 200 -4t200 6 200 -10 200 2v156H0z" fill="url(#mgsoil)"/>
+
+  <!-- root system -->
+  <g fill="none" stroke="#7c6448" stroke-width="2.5" stroke-linecap="round">
+    <path d="M400 268v78"/>
+    <path d="M400 296c-22 12-34 28-40 50"/>
+    <path d="M400 310c20 12 30 26 36 46"/>
+    <path d="M400 330c-14 8-22 18-26 32"/>
+  </g>
+
+  <!-- seed -->
+  <ellipse cx="400" cy="264" rx="13" ry="9" fill="#c9a86a"/>
+
+  <!-- sprout -->
+  <g>
+    <path d="M400 264v-86" fill="none" stroke="#5f9c5a" stroke-width="5" stroke-linecap="round"/>
+    <path d="M400 208c-4-30-28-46-58-48 2 32 26 50 58 48z" fill="#6aa85f"/>
+    <path d="M400 226c4-34 30-52 62-50-2 34-28 54-62 50z" fill="#83bf70"/>
+    <path d="M400 182c-3-20-18-30-38-32 1 21 17 33 38 32z" fill="#4f8f4a" opacity=".9"/>
+  </g>
+
+  <!-- calendar ticks: protocols become dates -->
+  <g stroke="#0088a9" stroke-width="2" opacity=".75">
+    <line x1="96" y1="86" x2="256" y2="86"/>
+    <line x1="544" y1="86" x2="704" y2="86"/>
+  </g>
+  <g fill="#0088a9">
+    <circle cx="96" cy="86" r="5"/><circle cx="176" cy="86" r="3.4"/><circle cx="256" cy="86" r="3.4"/>
+    <circle cx="544" cy="86" r="3.4"/><circle cx="624" cy="86" r="3.4"/><circle cx="704" cy="86" r="5"/>
+  </g>
+  <g fill="#8fc9d9" font-family="Montserrat, sans-serif" font-size="15" font-weight="600" text-anchor="middle">
+    <text x="176" y="68">sow</text>
+    <text x="624" y="68">plant out</text>
+  </g>
+</svg>

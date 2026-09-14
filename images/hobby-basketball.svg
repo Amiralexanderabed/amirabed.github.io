@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 260" width="400" height="260" role="img" aria-label="Animation of a basketball arcing through a hoop">
+  <defs>
+    <linearGradient id="bbsky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#f3f6f8"/>
+      <stop offset="100%" stop-color="#e2e8ec"/>
+    </linearGradient>
+    <radialGradient id="ball" cx="36%" cy="32%" r="72%">
+      <stop offset="0%" stop-color="#f0a05a"/>
+      <stop offset="100%" stop-color="#d2702a"/>
+    </radialGradient>
+  </defs>
+
+  <!-- no background rect: the card supplies a flat ground so that
+       object-fit:contain letterboxes invisibly at any card width -->
+
+  <!-- backboard -->
+  <g>
+    <rect x="252" y="24" width="108" height="74" rx="4" fill="#ffffff" stroke="#c3ccd3" stroke-width="2"/>
+    <rect x="286" y="56" width="40" height="30" fill="none" stroke="#0088a9" stroke-width="2.5"/>
+    <rect x="352" y="24" width="6" height="150" fill="#c3ccd3"/>
+  </g>
+
+  <!-- rim: back half, drawn before the ball -->
+  <path d="M270 104a36 10 0 0 0 72 0" fill="none" stroke="#c2521f" stroke-width="4" stroke-linecap="round"/>
+
+  <!-- net, swaying when the ball drops through -->
+  <g stroke="#9aa6ad" stroke-width="1.6" fill="none">
+    <animateTransform attributeName="transform" type="translate"
+      values="0 0; 0 0; 0 5; 0 -2; 0 0; 0 0"
+      keyTimes="0; 0.42; 0.52; 0.62; 0.72; 1"
+      dur="2.6s" repeatCount="indefinite"/>
+    <path d="M272 108q4 24 18 34"/>
+    <path d="M288 110q2 24 10 33"/>
+    <path d="M306 111v32"/>
+    <path d="M324 110q-2 24-10 33"/>
+    <path d="M340 108q-4 24-18 34"/>
+    <path d="M281 120q12 5 25 5t25-5"/>
+    <path d="M290 133q8 4 16 4t16-4"/>
+  </g>
+
+  <!-- ball -->
+  <g>
+    <animateMotion dur="2.6s" repeatCount="indefinite" keyPoints="0;0;1;1" keyTimes="0;0.06;0.72;1" calcMode="linear"
+      path="M44,196 Q168,-16 306,104 L306,250"/>
+    <g>
+      <animateTransform attributeName="transform" type="rotate" from="0 0 0" to="300 0 0" dur="2.6s" repeatCount="indefinite"/>
+      <circle r="19" fill="url(#ball)"/>
+      <g fill="none" stroke="#8f4415" stroke-width="1.7">
+        <circle r="19"/>
+        <path d="M-19 0h38"/>
+        <path d="M0 -19v38"/>
+        <path d="M-13.5 -13.5a19 19 0 0 0 27 27"/>
+        <path d="M13.5 -13.5a19 19 0 0 1-27 27"/>
+      </g>
+    </g>
+  </g>
+
+  <!-- rim: front half, drawn after the ball so it passes behind -->
+  <path d="M270 104a36 10 0 0 1 72 0" fill="none" stroke="#e0621f" stroke-width="4.5" stroke-linecap="round"/>
+</svg>
