@@ -6,7 +6,9 @@
   <title>Amir A. Abed — Radar Software Engineer</title>
   <meta name="description" content="Amir A. Abed — radar software engineer at RTX in Orange County, California, working on radar algorithms, signal processing and machine learning. M.S. Electrical Engineering, University of Arizona.">
   <link rel="icon" href="Triple_A_Logo.1.jpg" type="image/jpeg">
-  <link rel="stylesheet" type="text/css" href="css/style.css?v=2026-09g">
+  <link rel="stylesheet" type="text/css" href="css/style.css?v=2026-10a">
+  <script>/* apply a stored theme before first paint, or the page flashes light */
+(function(){try{var t=localStorage.getItem("theme");if(t==="dark"||t==="light")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
   <script src="https://kit.fontawesome.com/f5adb49572.js" crossorigin="anonymous"></script>
 </head>
 
@@ -17,6 +19,7 @@
       <a href="experience.html">Experience</a>
       <a href="projects.html">Projects</a>
       <a href="photos.html">Photos</a>
+      <button class="theme-toggle" type="button" aria-label="Switch theme" title="Switch theme" aria-pressed="false"><i class="fa-solid fa-moon" aria-hidden="true"></i></button>
     </nav>
   </header>
 
@@ -51,35 +54,21 @@
 
         <section class="section">
           <h2 class="section-title">Featured work</h2>
-          <p class="section-sub">Both are live — click through and spin them.</p>
-          <div class="featured-grid">
+          <p class="section-sub">What I'm building at the moment.</p>
+          <div class="featured-grid" style="max-width:420px">
 
             <article class="project-card">
-              <a class="project-cover" href="globe/index.html">
-                <img src="images/cover-biosphere.svg" alt="Stylised globe showing coloured ecoregions">
+              <a class="project-cover" href="https://denosgarden.com" target="_blank" rel="noopener">
+                <img src="images/cover-denosgarden.svg" alt="A seedling germinating in soil, between a sowing date and a plant-out date">
               </a>
               <div class="project-body">
-                <div class="project-meta">Interactive · WebGL2</div>
-                <h3><a href="globe/index.html">Biosphere</a><span class="badge-live">Live</span></h3>
-                <p>Spin the Earth through 846 land ecoregions and 269 marine regions — biomes, Köppen climate, and the species that live in each one.</p>
-                <div class="tags"><span class="tag">WebGL2</span><span class="tag">Python</span><span class="tag">GeoJSON</span></div>
+                <div class="project-meta">2026 · Solo</div>
+                <h3><a href="https://denosgarden.com" target="_blank" rel="noopener">Deno's Garden</a><span class="badge-wip">Work in progress</span></h3>
+                <p>A seed germination reference: published propagation protocols turned into structured, ordered steps, and those steps turned into real sowing and plant-out dates.</p>
+                <p>Actively being built — expect rough edges.</p>
+                <div class="tags"><span class="tag">Astro</span><span class="tag">TypeScript</span><span class="tag">SQLite</span><span class="tag">Python</span></div>
                 <div class="project-links">
-                  <a href="globe/index.html">Open Biosphere <i class="fa-solid fa-arrow-right"></i></a>
-                </div>
-              </div>
-            </article>
-
-            <article class="project-card">
-              <a class="project-cover" href="deeptime/index.html">
-                <img src="images/cover-deeptime.svg" alt="Stylised geological strata spanning deep time">
-              </a>
-              <div class="project-body">
-                <div class="project-meta">Interactive · WebGL2</div>
-                <h3><a href="deeptime/index.html">Deep Time</a><span class="badge-live">Live</span></h3>
-                <p>Scroll through 4.6 billion years. Continents drift on a reconstructed globe from the Müller plate model, with clickable fossil localities.</p>
-                <div class="tags"><span class="tag">WebGL2</span><span class="tag">Plate model</span><span class="tag">Paleobiology DB</span></div>
-                <div class="project-links">
-                  <a href="deeptime/index.html">Open Deep Time <i class="fa-solid fa-arrow-right"></i></a>
+                  <a href="https://denosgarden.com" target="_blank" rel="noopener">denosgarden.com <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
                 </div>
               </div>
             </article>
@@ -120,5 +109,6 @@
     </div>
     <p>&copy; Amir Abed 2026</p>
   </footer>
+  <script src="js/theme.js"></script>
 </body>
 </html>

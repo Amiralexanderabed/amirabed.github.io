@@ -6,7 +6,9 @@
   <title>Projects — Amir A. Abed</title>
   <meta name="description" content="Interactive WebGL2 data visualizations, embedded systems, computer vision and signal processing projects by Amir A. Abed.">
   <link rel="icon" href="Triple_A_Logo.1.jpg" type="image/jpeg">
-  <link rel="stylesheet" type="text/css" href="css/style.css?v=2026-09g">
+  <link rel="stylesheet" type="text/css" href="css/style.css?v=2026-10a">
+  <script>/* apply a stored theme before first paint, or the page flashes light */
+(function(){try{var t=localStorage.getItem("theme");if(t==="dark"||t==="light")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
   <script src="https://kit.fontawesome.com/f5adb49572.js" crossorigin="anonymous"></script>
 </head>
 
@@ -17,6 +19,7 @@
       <a href="experience.html">Experience</a>
       <a class="active" href="projects.html">Projects</a>
       <a href="photos.html">Photos</a>
+      <button class="theme-toggle" type="button" aria-label="Switch theme" title="Switch theme" aria-pressed="false"><i class="fa-solid fa-moon" aria-hidden="true"></i></button>
     </nav>
   </header>
 
@@ -31,22 +34,6 @@
       <section class="section">
         <h2 class="section-title">Interactive Websites</h2>
         <div class="project-grid">
-
-          <article class="project-card">
-            <a class="project-cover" href="https://mendelsgardens.com" target="_blank" rel="noopener">
-              <img src="images/cover-mendelsgardens.svg" alt="A seedling germinating in soil, between a sowing date and a plant-out date">
-            </a>
-            <div class="project-body">
-              <div class="project-meta">2026 · Solo</div>
-              <h3><a href="https://mendelsgardens.com" target="_blank" rel="noopener">Mendel's Gardens</a><span class="badge-wip">Work in progress</span></h3>
-              <p>A seed germination reference: published propagation protocols turned into structured, ordered steps, and those steps turned into real sowing and plant-out dates.</p>
-              <p>Actively being built — expect rough edges.</p>
-              <div class="tags"><span class="tag">Astro</span><span class="tag">TypeScript</span><span class="tag">SQLite</span><span class="tag">Python</span></div>
-              <div class="project-links">
-                <a href="https://mendelsgardens.com" target="_blank" rel="noopener">mendelsgardens.com <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
-              </div>
-            </div>
-          </article>
 
           <article class="project-card">
             <a class="project-cover" href="globe/index.html">
@@ -161,5 +148,6 @@
     </div>
     <p>&copy; Amir Abed 2026</p>
   </footer>
+  <script src="js/theme.js"></script>
 </body>
 </html>

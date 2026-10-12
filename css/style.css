@@ -1,19 +1,61 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
 
-/* ---------- tokens ---------- */
+/* ---------- tokens ----------
+   Light is the base. The dark palette is declared twice on purpose: once
+   behind the system preference (skipped when the visitor has explicitly
+   chosen light) and once behind data-theme="dark", so the toggle wins in
+   both directions. Never give a colour its only definition inside one of
+   those blocks. */
 :root {
+  color-scheme: light;
   --accent: #0088a9;
   --accent-dark: #006e88;
   --accent-tint: rgba(0, 136, 169, 0.09);
+  --on-accent: #ffffff;
   --bg: rgb(235, 235, 235);
   --card: #ffffff;
   --ink: #16191c;
   --ink-soft: #5a656e;
   --line: #e3e7ea;
+  --img-ground: #f2f5f7;
   --shadow: 0 1px 3px rgba(120, 130, 140, 0.28);
   --shadow-lift: 0 6px 18px rgba(90, 100, 110, 0.22);
   --radius: 10px;
   --wrap: 1120px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --accent: #45b8d6;
+    --accent-dark: #6fcde5;
+    --accent-tint: rgba(69, 184, 214, 0.15);
+    --on-accent: #06222b;
+    --bg: #12161a;
+    --card: #1a2026;
+    --ink: #e7edf2;
+    --ink-soft: #a0aeb9;
+    --line: #2a323a;
+    --img-ground: #232a31;
+    --shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+    --shadow-lift: 0 6px 18px rgba(0, 0, 0, 0.55);
+  }
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --accent: #45b8d6;
+  --accent-dark: #6fcde5;
+  --accent-tint: rgba(69, 184, 214, 0.15);
+  --on-accent: #06222b;
+  --bg: #12161a;
+  --card: #1a2026;
+  --ink: #e7edf2;
+  --ink-soft: #a0aeb9;
+  --line: #2a323a;
+  --img-ground: #232a31;
+  --shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+  --shadow-lift: 0 6px 18px rgba(0, 0, 0, 0.55);
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -66,7 +108,7 @@ a { color: var(--accent); text-decoration: none; }
 
 .btn-resume {
   background: var(--accent);
-  color: #fff;
+  color: var(--on-accent);
   text-transform: uppercase;
   font-size: 0.72rem;
   font-weight: 600;
@@ -78,7 +120,41 @@ a { color: var(--accent); text-decoration: none; }
 }
 
 .btn-resume:hover { background: var(--accent-dark); transform: translateY(-1px); border-bottom-color: transparent; }
-.site-nav a.btn-resume:hover { color: #fff; border-bottom-color: transparent; }
+.site-nav a.btn-resume:hover { color: var(--on-accent); border-bottom-color: transparent; }
+
+/* ---------- theme toggle ---------- */
+.theme-toggle {
+  width: 2rem;
+  height: 2rem;
+  flex: none;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  font-size: 0.8rem;
+  line-height: 1;
+  color: var(--ink-soft);
+  background: transparent;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+
+.theme-toggle:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+  background: var(--accent-tint);
+}
+
+.theme-toggle:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.theme-toggle svg { display: block; }
+
+/* pinned to the right on wide screens; just another item in the wrapped
+   nav once there isn't room beside the links */
+@media (min-width: 701px) {
+  .site-nav { position: relative; }
+  .theme-toggle { position: absolute; right: 1.25rem; top: 50%; transform: translateY(-50%); }
+}
 
 /* ---------- layout ---------- */
 .wrap {
@@ -202,7 +278,7 @@ a { color: var(--accent); text-decoration: none; }
   transition: background 0.2s ease, transform 0.2s ease, color 0.2s ease;
 }
 
-.social-row a:hover { background: var(--accent); color: #fff; transform: translateY(-2px); }
+.social-row a:hover { background: var(--accent); color: var(--on-accent); transform: translateY(-2px); }
 
 .profile-cta { padding: 0.6rem 1rem 1.1rem; display: grid; }
 .profile-cta .btn-resume { text-align: center; display: block; }
@@ -265,13 +341,13 @@ a { color: var(--accent); text-decoration: none; }
   margin: -1.2rem -1.25rem 0.9rem;
   height: 165px;
   object-fit: cover;
-  background: #eef1f3;
+  background: var(--img-ground);
 }
 
 /* some of these must stay whole at every card width — the drawn hoop, and
    any image whose meaning is in text near its edges — so contain rather
    than crop, against a flat ground */
-.hobby-img.hobby-contain { object-fit: contain; background: #eef2f5; padding: 0.4rem; }
+.hobby-img.hobby-contain { object-fit: contain; background: var(--img-ground); padding: 0.4rem; }
 
 /* the home column is narrow enough that four cards read better as a 2x2 */
 .home-grid .focus-grid { grid-template-columns: repeat(2, 1fr); }
@@ -344,7 +420,7 @@ a { color: var(--accent); text-decoration: none; }
 .badge-wip {
   display: inline-block;
   background: var(--accent);
-  color: #fff;
+  color: var(--on-accent);
   font-size: 0.64rem;
   font-weight: 700;
   letter-spacing: 0.09em;
@@ -452,7 +528,7 @@ a { color: var(--accent); text-decoration: none; }
 }
 
 .shot:hover { transform: translateY(-3px); box-shadow: var(--shadow-lift); }
-.shot img { width: 100%; height: 220px; object-fit: contain; background: #fafbfc; padding: 0.6rem; }
+.shot img { width: 100%; height: 220px; object-fit: contain; background: var(--img-ground); padding: 0.6rem; }
 .shot.tall img { height: 300px; }
 .shot figcaption { padding: 0.7rem 0.95rem 0.9rem; font-size: 0.82rem; color: var(--ink-soft); border-top: 1px solid var(--line); }
 .shot figcaption strong { display: block; color: var(--ink); font-weight: 600; font-size: 0.88rem; margin-bottom: 0.1rem; }
